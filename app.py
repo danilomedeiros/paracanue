@@ -7,11 +7,9 @@ def estimate_time_at_positions(df, positions):
     estimated_times = {pos: None for pos in positions}
     estimated_200 = 0
     for i in range(1, len(df)):
-        print(i)
         current_pos = df.iloc[i]['Distância']
         previous_pos = df.iloc[i - 1]['Distância']
         if current_pos == 200:
-            print('kkKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK')
             estimated_200 = (
                 df.iloc[i - 1]['Min'] * 60 +
                 df.iloc[i - 1]['Segundo'] +
@@ -56,8 +54,6 @@ def calculate_cycles_and_lost_strokes(df, trecho_positions):
     """
     # Inicializar contadores
     trecho_ciclos = {trecho: 0 for trecho in trecho_positions.values()}
-    print('agora s')
-    print(trecho_ciclos)
     cycles = 0
     lost_strokes = 0
     used_indices = set()  # Para rastrear as remadas já usadas em ciclos
@@ -65,7 +61,6 @@ def calculate_cycles_and_lost_strokes(df, trecho_positions):
     i = 0
     while i < len(df) - 1:
         # Verificar se a remada atual forma um ciclo válido com a próxima
-        print(i)
         if (
             df.iloc[i]['Ação'] == 'Entrada'
             and df.iloc[i + 1]['Ação'] == 'Saida'
@@ -114,14 +109,11 @@ def calculate_cycles_and_lost_strokes(df, trecho_positions):
             i += 2  # Saltar 2 porque contamos a remada de entrada e saída como perdida
         else:
             i += 1  # Caso a remada já tenha sido usada em outro ciclo, continuar para a próxima
-    print(cycles)
-    print(trecho_ciclos)
     return cycles, lost_strokes, trecho_ciclos
 
 
 def calculate_metrics_by_trecho(df, trecho_positions):
     positions = sorted(trecho_positions.keys())
-    print(positions)
     metrics = {
         'Trecho': [],
         'Ciclos': [],
@@ -146,7 +138,6 @@ def calculate_metrics_by_trecho(df, trecho_positions):
 
     total_cycles, total_lost_strokes, trecho_ciclos = calculate_cycles_and_lost_strokes(df, trecho_positions)
     estimated_times = estimate_time_at_positions(df, positions)
-    print(estimated_times)
     total_remadas = 0
     total_ciclos = 0
     total_tempo = 0
@@ -260,7 +251,6 @@ def display_results(df):
 
     trecho_positions = {0: '0-25m', 25: '25-50m', 50: '50-75m', 75: '75-100m', 100: '100-125m', 125: '125-150m', 150: '150-175m', 175: '175-200m'}
 
-    print(trecho_positions)
     metrics_pre = calculate_metrics_by_trecho(df_pre, trecho_positions)
     metrics_pos = calculate_metrics_by_trecho(df_pos, trecho_positions)
 
@@ -273,7 +263,7 @@ def display_results(df):
 
 def main():
     st.title("Análise de Remadas em Caiaque")
-    file_path = "Fases Remada LB - PrePos - Fasederemada_LuisBernardo.csv"
+    file_path = "lb.csv"
 
     df = pd.read_csv(file_path)
 
