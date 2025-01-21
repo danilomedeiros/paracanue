@@ -474,6 +474,11 @@ def display_results(df):
         'Freq de Ciclo (r/min)' ,
         'Comp Médio Ciclo (m/ciclo)',
         'Índice de Ciclo',
+        'Fase aérea',
+        'Fase aquática',
+        'Fase aérea %',
+        'Fase aquática %',
+        
     ]
 
 
